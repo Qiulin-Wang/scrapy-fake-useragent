@@ -1,4 +1,4 @@
-scrapy_fake_useragent
+scrapy-fake-useragent-fix
 =====================
 
 Random User-Agent middleware based on
@@ -12,7 +12,7 @@ Installation
 
 The simplest way is to install it via `pip`:
 
-    pip install scrapy_fake_useragent
+    pip install scrapy-fake-useragent-fix
 
 Configuration
 -------------

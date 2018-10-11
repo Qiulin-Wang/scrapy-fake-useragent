@@ -1,8 +1,8 @@
 from setuptools import setup
 
 setup(
-    name='scrapy_fake_useragent',
-    version='0.1.0',
+    name='scrapy-fake-useragent-fix',
+    version='0.1.1',
     description='Use a random User-Agent provided by fake-useragent for every request',
     long_description=open('README.rst').read(),
     keywords='scrapy proxy user-agent web-scraping',
