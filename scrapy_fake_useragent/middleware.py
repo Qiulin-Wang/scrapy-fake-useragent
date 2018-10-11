@@ -1,5 +1,6 @@
 import logging
-from fake_useragent import UserAgent
+
+from scrapy_fake_useragent.user_agent_picker import UserAgentPicker
 
 logger = logging.getLogger(__name__)
 
@@ -8,26 +9,19 @@ class RandomUserAgentMiddleware(object):
         super(RandomUserAgentMiddleware, self).__init__()
 
         fallback = crawler.settings.get('FAKEUSERAGENT_FALLBACK', None)
-        self.ua = UserAgent(fallback=fallback)
-        self.per_proxy = crawler.settings.get('RANDOM_UA_PER_PROXY', False)
-        self.ua_type = crawler.settings.get('RANDOM_UA_TYPE', 'random')
-        self.proxy2ua = {}
+        per_proxy = crawler.settings.get('RANDOM_UA_PER_PROXY', False)
+        ua_type = crawler.settings.get('RANDOM_UA_TYPE', 'random')
+        self.ua_picker = UserAgentPicker(ua_type, per_proxy, fallback)
 
     @classmethod
     def from_crawler(cls, crawler):
         return cls(crawler)
 
     def process_request(self, request, spider):
-        def get_ua():
-            '''Gets random UA based on the type setting (random, firefox…)'''
-            return getattr(self.ua, self.ua_type)
-        
-        if self.per_proxy:
-            proxy = request.meta.get('proxy')
-            if proxy not in self.proxy2ua:
-                self.proxy2ua[proxy] = get_ua()
-                logger.debug('Assign User-Agent %s to Proxy %s'
-                             % (self.proxy2ua[proxy], proxy))
-            request.headers.setdefault('User-Agent', self.proxy2ua[proxy])
-        else:
-            request.headers.setdefault('User-Agent', get_ua())
+        proxy = request.meta.get('proxy')
+        if proxy:
+            logger.debug('Proxy is detected %s', proxy)
+
+        ua = self.ua_picker.get_ua(proxy)
+        logger.debug('Assigned User-Agent %s', ua)
+        request.headers.setdefault('User-Agent', ua)

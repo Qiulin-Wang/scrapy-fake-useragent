@@ -1,12 +1,4 @@
-.. image:: https://badge.fury.io/py/scrapy-fake-useragent.svg
-     :target: http://badge.fury.io/py/scrapy-fake-useragent
-     :alt: PyPI version
-
-.. image:: https://requires.io/github/alecxe/scrapy-fake-useragent/requirements.svg?branch=master
-     :target: https://requires.io/github/alecxe/scrapy-fake-useragent/requirements/?branch=master
-     :alt: Requirements Status
-
-scrapy-fake-useragent
+scrapy_fake_useragent
 =====================
 
 Random User-Agent middleware based on
@@ -20,7 +12,7 @@ Installation
 
 The simplest way is to install it via `pip`:
 
-    pip install scrapy-fake-useragent
+    pip install scrapy_fake_useragent
 
 Configuration
 -------------
@@ -49,7 +41,7 @@ In Scrapy <1.0:
 Configuring User-Agent type
 ---------------------------
 
-There's a configuration parameter ``RANDOM_UA_TYPE`` defaulting to ``random`` which is passed verbatim to the fake-user-agent. Therefore you can set it to say ``firefox`` to mimic only firefox browsers. Most useful though would be to use ``desktop`` or ``mobile`` values to send desktop or mobile strings respectively.
+There's a configuration parameter ``RANDOM_UA_TYPE`` defaulting to ``random`` which is passed verbatim to the fake-user-agent to random choose user agents. ``random``, ``chrome``, ``firefox``, ``safari``, ``internetexplorer`` are supported. If you want to choose from a specific device type, you can use a device prefix before browse type, such as ``desktop.chrome``, ``mobile.chrome``, only ``desktop``, ``mobile``, ``tablet`` are supported.
 
 Usage with `scrapy-proxies`
 ---------------------------
